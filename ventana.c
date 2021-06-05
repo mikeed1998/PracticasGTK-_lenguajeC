@@ -88,9 +88,6 @@ void on_rb_3_toggled (GtkToggleButton *togglebutton, app_widgets *ap_w)
 
 void on_chk_toggled(GtkToggleButton *togglebutton, app_widgets *ap_w)
 {
-    // Print the check button name
-    // g_print("%s\n", gtk_widget_get_name(GTK_WIDGET(togglebutton)));
-    
     if (g_strcmp0(gtk_widget_get_name(GTK_WIDGET(togglebutton)), "UNO") == 0) {
         gtk_label_set_text(GTK_LABEL(ap_w->w_lbl_2), gtk_widget_get_name(GTK_WIDGET(togglebutton)));
     }
@@ -117,35 +114,24 @@ void on_chk_toggled(GtkToggleButton *togglebutton, app_widgets *ap_w)
 
 void on_btn_show_option_clicked(GtkButton *button, app_widgets *ap_w)
 {
-    gint  item_num = 0;     // selected item number from text combo box
-    gchar *item_text = 0;   // selected item text from text combo box
-    GString *gstr_sel_text; // dynamic string for converting number to string
-    // create a new empty string
+    gint  item_num = 0;    
+    gchar *item_text = 0;   
+    GString *gstr_sel_text;
     gstr_sel_text = g_string_new("");
     
-    // ---- Item Number ----
-    // get selected item number from GtkComboBoxText object
     item_num = gtk_combo_box_get_active(GTK_COMBO_BOX(ap_w->w_comboboxtext_options));
-    // print the selected number to the dynamic string
     g_string_printf(gstr_sel_text, "Item: %d", item_num);
-    // display selected item number in text label
     gtk_label_set_text(GTK_LABEL(ap_w->w_lbl_4), gstr_sel_text->str);
-    // free up memory from dynamically allocated string
     g_string_free(gstr_sel_text, TRUE);
     
-    // ---- Item Text ----
-    // get selected item text from GtkComboBoxText object
     item_text = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(ap_w->w_comboboxtext_options));
     if (item_text == NULL) {
-        // return if no text found in combo box
         return;
     }
     gtk_label_set_text(GTK_LABEL(ap_w->w_lbl_5), item_text);
-    // free up dynamically allocated memory
     g_free(item_text);
 }
 
-// called when window is closed
 void on_window_main_destroy()
 {
     gtk_main_quit();
